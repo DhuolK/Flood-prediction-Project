@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Flood Prediction</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        body {
+            background-image: url(/static/image/wp9040262.jpg);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            color: black;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background-color: gray;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: rgb(175, 175, 175);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0rem 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .nav {
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            justify-content: space-between;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        h1 {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin: 25px 20px 20px 20px;
+            font-size: xx-large;
+        }
+        
+        .fas {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin: 25px 20px 20px 20px;
+            font-size: xx-large;
+        }
+        
+        a {
+            margin: 0 15px;
+            font-size: medium;
+            text-decoration: none;
+        }
+        
+        .home, .logout {
+            background: none;
+            color: black;
+            padding: 14.5px;
+            width: 30%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+        
+        .home:hover, .logout:hover {
+            background: none;
+            color: beige;
+        }
+        
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+        
+        .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .alert {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div class="nav-left">
+                <i class="fas fa-water" style="color:black"></i> 
+                <h1 style="color: black;">FLOOD ADMIN</h1>
+            </div>
+            
+            <div class="nav-right">
+                <a href="{{ url_for('home') }}"><button type="button" class="home">HOME</button></a>
+                <a href="{{ url_for('admin_logout') }}"><button type="button" class="logout">LOGOUT</button></a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2 class="text-center mb-4">Admin Dashboard</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>City</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>Rainfall</th>
+                            <th>Predicted Risk</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prediction in predictions %}
+                        <tr>
+                            <td>{{ prediction.date }}</td>
+                            <td>{{ prediction.city }}</td>
+                            <td>{{ prediction.temperature }}°C</td>
+                            <td>{{ prediction.humidity }}%</td>
+                            <td>{{ prediction.rainfall }}mm</td>
+                            <td>
+                                {% if prediction.predicted_risk == "Low Risk" %}
+                                    <span class="badge bg-success">Low Risk</span>
+                                {% elif prediction.predicted_risk == "Moderate Risk" %}
+                                    <span class="badge bg-warning text-dark">Moderate Risk</span>
+                                {% elif prediction.predicted_risk == "High Risk" %}
+                                    <span class="badge bg-danger">High Risk</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ prediction.predicted_risk }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form action="{{ url_for('delete_prediction', date=prediction.date) }}" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this prediction?')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,302 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+    background-image:url(/static/image/wp9040262.jpg) ;
+    height:100%;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+
+
+ul{
+	list-style-type: none;
+	display:flex;
+	flex-wrap: no-wrap;
+    margin-top:65px ;
+    margin-right: 20px ;
+    margin-bottom:20px ;
+    margin-left:20px ;
+}
+
+i{
+    display:flex;
+	flex-wrap: no-wrap;
+    margin-top:31px ;
+    margin-right:0;
+    margin-bottom:20px ;
+    margin-left:20px ;
+    font-size: xx-large;
+
+}
+
+h1{
+    display:flex;
+	flex-wrap: no-wrap;
+    margin-top:26px ;
+    margin-right: 360px ;
+    margin-bottom:20px ;
+    margin-left:20px ;
+    font-size: xx-large;
+
+}
+
+li{
+	margin-left:50px;
+	margin-right:50px;
+    margin-top: 20px;
+}
+
+.container{
+	display:flex;
+	background-color: none;
+	height:80px;
+    width:100%;
+}
+
+.navigation{
+    align-items: end;
+}
+
+.nav{
+    text-decoration: none;
+    color: black;
+}
+
+
+
+.content{
+    display: flex;
+    align-items: center;
+}
+
+.text{
+    flex:1;
+    margin-left:190px;
+}
+
+.img-logo{
+    border: none;
+    background: none;
+    margin: none;
+    width: 60%;
+    height: 20%;
+
+}
+
+p{
+    font-size: xx-large;
+}
+
+
+
+button:hover {
+    background-color: #484848;
+}
+
+.image{
+    flex:2;
+    margin-right: 90px;
+    margin-bottom: 20px;
+
+}
+
+.img-rainfall{
+    width: 80%;
+    height: 20%;
+    border: none;
+    background: none;
+}
+
+.footer{
+    width:device-width;
+    background-color:rgb(22, 21, 21);
+    display: flex;
+    flex-direction:row;
+    align-content: center;
+    margin: 0;
+    color: #fff;
+  }
+
+  h2{
+    flex: 1;
+    margin-top: 25px;
+    margin-right: 85px;
+    font-size: x-large;
+    color: #fff;
+  }
+
+  .foot-text{
+    font-size: medium;
+    flex: 4;
+    color: #fff;
+
+  }
+
+  .foot-text2{
+    font-size: medium;
+    flex: 4;
+    color: #fff;
+
+  }
+  
+  .foot-text3{
+    font-size: medium;
+    flex: 4;
+    color: #fff;
+
+  }
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem 1rem;
+    margin-bottom: 20px;
+}
+
+.nav {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+h1 {
+    display: flex;
+    flex-wrap: no-wrap;
+    margin: 25px 20px 20px 20px;
+    font-size: xx-large;
+}
+
+.fas {
+    display: flex;
+    flex-wrap: no-wrap;
+    margin: 25px 20px 20px 20px;
+    font-size: xx-large;
+}
+
+a {
+    margin: 0 15px;
+    font-size: medium;
+    text-decoration: none;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    color: aquamarine;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 25px 20px 20px 0;
+}
+
+.navigation{
+align-items: end;
+}
+
+.home, .predict, .HISTORY, .INFO {
+background: none;
+color: black;
+padding: 14.5px;
+width: 30%;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 25px;
+}
+
+.home:hover, .predict:hover, .HISTORY:hover, .INFO:hover {
+background:none;
+color: beige;
+}
+
+.dropdown {
+display: none;
+position: absolute;
+top: 50px;
+right: 10px;
+width: 250px;
+background: white;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+overflow: hidden;
+}
+
+.dropdown-header {
+display: flex;
+padding: 15px;
+align-items: center;
+border-bottom: 1px solid #ddd;
+}
+
+.avatar {
+width: 40px;
+height: 40px;
+background-color: black;
+color: aquamarine;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+margin-right: 10px;
+}
+
+.user-info {
+flex: 1;
+}
+
+.user-name {
+font-weight: bold;
+margin: 0;
+}
+
+.user-email {
+font-size: 14px;
+color: gray;
+margin: 0;
+}
+
+.dropdown-item {
+display: block;
+padding: 10px 15px;
+text-decoration: none;
+color: black;
+font-size: 14px;
+}
+
+.dropdown-item:hover {
+background: #f0f0f0;
+}
+
+hr {
+margin: 0;
+border: none;
+border-top: 1px solid #ddd;
+}

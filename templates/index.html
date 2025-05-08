@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Flood Prediction</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <script defer src="/static/indexscript.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-image:url(/static/image/wp9040262.jpg);
+
+            height:100%;
+    
+            background-position:center;
+            background-repeat:no-repeat;
+            background-size:cover;
+                   
+            display: block;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+            font-family:Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            color: black;
+            padding: 25px;
+        }
+        .btn-primary {
+            background-color: gray ;
+            border: none;
+        }
+        .btn-primary:hover{
+            background-color: rgb(175, 175, 175) ;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0rem 1rem;
+            margin-bottom: 20px;
+        }
+
+        .nav {
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        h1 {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin: 25px 20px 20px 20px;
+            font-size: xx-large;
+        }
+
+        .fas {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin: 25px 20px 20px 20px;
+            font-size: xx-large;
+        }
+
+        a {
+            margin: 0 15px;
+            font-size: medium;
+            text-decoration: none;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+            color: aquamarine;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 25px 20px 20px 0;
+        }
+
+        .navigation{
+    align-items: end;
+}
+
+.home, .get-started, .HISTORY, .INFO {
+background: none;
+color: black;
+padding: 14.5px;
+width: 30%;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 25px;
+}
+
+.home:hover, .get-started:hover, .HISTORY:hover, .INFO:hover {
+    background:none;
+    color: beige;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    width: 250px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-header {
+    display: flex;
+    padding: 15px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    color: aquamarine;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.user-email {
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+hr {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav">
+            <div class="nav-left">
+                <i class="fas fa-water" style="color:black"></i> 
+                <h1 style="color: black;">FLOOD </h1>
+            </div>
+            
+            <div class="nav-right">
+
+                <a href="/"><button type="button" class="home">HOME</button></a>
+
+                <a href="/history"><button type="button" class="HISTORY">HISTORY</button></a>
+
+                <a href="/info"><button type="button" class="INFO">ABOUT</button></a>
+
+                {% if 'user' in session %}
+                <div class="profile-icon" onclick="toggleDropdown()">
+                    <span>{{ user.initials }}</span>
+                </div>
+                {% else %}
+                <div class="profile-icon" onclick="toggleDropdown()">
+                    <span>?</span>
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <div class="dropdown" id="dropdown">
+        <div class="dropdown-header">
+            {% if 'user' in session %}
+            <div class="avatar">{{ user.initials }}</div>
+            <div class="user-info">
+                <p class="user-name">{{ user.name }}</p>
+                <p class="user-email">{{ user.email }}</p>
+            </div>
+            {% else %}
+            <div class="avatar">?</div>
+            <div class="user-info">
+                <p class="user-name">Guest</p>
+                <p class="user-email">Not logged in</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr>
+        <a href="{{ url_for('auth.signup') }}" class="dropdown-item">Create Account</a>
+        <a href="{{ url_for('auth.login_page') }}" class="dropdown-item">Log in</a>
+        {% if 'user' in session %}
+        <a href="{{ url_for('auth.logout') }}" class="dropdown-item">Sign out</a>
+        {% endif %}
+    </div>
+
+ <br><br><br><br><br><br><br>
+
+<div class="container">
+    
+    <div class="card mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <h5 class="card-title text-center">Select or Enter City</h5>
+            <form action="/predict" method="post">
+                <!-- Dropdown for cities -->
+                <div class="mb-3">
+                    <select id="cityDropdown" class="form-select" onchange="updateCityInput()">
+                        <option value="">Select a city...</option>
+                        <option value="Nakuru">Nakuru</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Kisumu">Kisumu</option>
+                        <option value="Eldoret">Eldoret</option>
+                    </select>
+                </div>
+
+                <!-- Manual city input -->
+                <div class="mb-3">
+                    <input type="text" id="cityInput" name="city" class="form-control text-center" 
+                           placeholder="Enter one or more cities (comma-separated)..." required>
+                </div>
+
+                <button type="submit" id="myButton" class="btn btn-primary w-100">
+                 Predict Flood Risk
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle dropdown selection -->
+<script>
+    function updateCityInput() {
+        let selectedCity = document.getElementById("cityDropdown").value;
+        let cityInput = document.getElementById("cityInput");
+
+        if (selectedCity) {
+            if (cityInput.value) {
+                cityInput.value += ", " + selectedCity;
+            } else {
+                cityInput.value = selectedCity;
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>

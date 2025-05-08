@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+   <!-- Tailwind CSS -->
+   <script defer src="https://cdn.tailwindcss.com"></script>
+
+   <script defer src="/static/indexscript.js"></script>
+
+   <!-- Personal CSS -->
+   <link rel="stylesheet" href="/static/infostyle.css">
+    
+   <!-- Font Awesome (Icons) -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <title>Flood Prediction information</title>
+
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+      <div class="nav-left">
+        <i class="fas fa-water" style="color: black;"></i> 
+        <h1 style="color: black;">FLOOD </h1>
+      </div>
+      
+      <div class="nav-right">
+        <div class="navigation">
+
+          <a class="nav" href="/">HOME</a>
+
+          <a class="nav" href="/index">PREDICT</a>
+
+          <a class="nav" href="/history">HISTORY</a>
+        </div>
+        {% if 'user' in session %}
+        <div class="profile-icon" onclick="toggleDropdown()">
+          <span>{{ user.initials }}</span>
+        </div>
+        {% else %}
+        <div class="profile-icon" onclick="toggleDropdown()">
+          <span>?</span>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <div class="dropdown" id="dropdown">
+    <div class="dropdown-header">
+      {% if 'user' in session %}
+      <div class="avatar">{{ user.initials }}</div>
+      <div class="user-info">
+        <p class="user-name">{{ user.name }}</p>
+        <p class="user-email">{{ user.email }}</p>
+      </div>
+      {% else %}
+      <div class="avatar">?</div>
+      <div class="user-info">
+        <p class="user-name">Guest</p>
+        <p class="user-email">Not logged in</p>
+      </div>
+      {% endif %}
+    </div>
+    <hr>
+    <a href="{{ url_for('auth.signup') }}" class="dropdown-item">Create Account</a>
+    <a href="{{ url_for('auth.login_page') }}" class="dropdown-item">Log in</a>
+    {% if 'user' in session %}
+    <a href="{{ url_for('auth.logout') }}" class="dropdown-item">Sign out</a>
+    {% endif %}
+</div>
+    
+    <br><br>
+
+    <div class="dev-info">
+
+        <div class="member">
+            <img align="center" src="{{ url_for('static', filename='image/user-profile-computer-icons-login-clip-art-png-favpng-17raMaNK8TDg96GJM0eFABEsz.jpg') }}" alt="Click Me">
+            <p><b>NAME:</b> Glen Kirui</p>
+            <p><b>Number:</b>0790392349</p>
+            <p><b>Email:</b>kiruiglen@gmail.com</p>
+        </div>
+
+        <div class="member">
+            <img align="center" src="{{ url_for('static', filename='image/user-profile-computer-icons-login-clip-art-png-favpng-17raMaNK8TDg96GJM0eFABEsz.jpg') }}" alt="Click Me">
+            <p><b>NAME:</b> Emmanuel Dhuol</p>
+            <p><b>Number:</b> 0798659609</p>
+            <p><b>Email:</b>dhuoljok@gmail.com</p>
+        </div>
+
+        <div class="member">
+            <img align="center" src="{{ url_for('static', filename='image/user-profile-computer-icons-login-clip-art-png-favpng-17raMaNK8TDg96GJM0eFABEsz.jpg') }}" alt="Click Me">
+            <p><b>NAME:</b>Kelvin Muli</p>
+            <p><b>Number:</b>0746726823</p>
+            <p><b>Email:</b>kmmuli76@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="system-info">
+
+        <div class="text1">
+<p>
+    <h3>PROJECT INFORMATION</h3> <br>
+<u><b>Intoduction</b></u> <br><br>
+
+This flood prediction system aims to forecast and mitigate flood risks by analyzing hydrological data,
+weather patterns, and other relevant factors, ultimately saving lives and minimizing property damage.
+Here's a more detailed look at flood prediction systems: <br><br>
+
+<b> <u> Key Components and Functionality </u> </b> <br><br>
+
+<b>i)Data Collection: </b> <br>
+These systems rely on real-time data from various sources, including rainfall gauges, weather stations,< 
+river level sensors, and satellite imagery. <br><br> 
+
+<b>ii)Data Analysis and Modeling:</b> <br>
+Machine learning algorithms and statistical models are used to analyze historical data, identify patterns, 
+ and predict future flood scenarios. <br><br> 
+
+<b>iii)Forecasting:</b> <br>
+The models generate forecasts of potential flood levels, extent, and timing, allowing for timely warnings
+and preparedness. <br><br> 
+
+<b>iv)Communication and Dissemination:</b> <br>
+Alerts and warnings are communicated to relevant authorities and the public through various channels,
+including SMS, email, social media, and websites.<br><br>  
+
+<b>v)Risk Assessment and Mitigation:</b> <br>
+Flood prediction systems help assess flood risks, identify vulnerable areas, and inform mitigation 
+measures, such as evacuation plans and infrastructure improvements. <br><br>
+
+</p>
+        </div>
+
+        <div class="text2">
+<p>
+<strong><u>Method and Technology used</u></strong> <br> <br>
+
+<b>Machine Learning:</b> <br>
+Algorithms like neural networks are used to analyze complex data and predict flood events with <br>
+improved accuracy. <br><br>
+ 
+<b>Flood Prediction Using Machine Learning Algorithms:</b> <br>
+This project uses machine learning algorithms to predict flood events based on rainfall data. <br><br>
+
+<b><u>Benefits of the Flood Prediction Systems</u></b> <br><br>
+
+a)Reduced Human Casualties: <br>
+Early warnings and preparedness measures can save lives during flood events. <br><br>
+
+b)Minimization of Property Damage: <br>
+Flood prediction systems help reduce the impact of floods on property and infrastructure. <br><br>
+
+c)Improved Resource Management: <br>
+Accurate flood forecasts enable better management of water resources and disaster response efforts.<br><br>
+
+d)Enhanced Public Safety: <br>
+Timely warnings and information dissemination help protect the public and ensure their safety. 
+        </p>
+        </div>
+
+</div>
+
+<div class="footer">
+  <h2>FLOOD<br>PREDICTION<br>SYSTEM</h2>
+
+  <p class="foot-text">Contact Glen at: <br>
+    <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple;"></i></a>
+    <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple;"></i></a>
+    <br><a class="foot-text" href=""> kiruiglen@gmail.com</a><br> 
+    +254 790392349 <br> 
+    Nakuru, Kabarak <br>
+  </p>
+
+  <p class="foot-text2">Contact Emmanuel at: <br>
+    <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple;"></i></a>
+    <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple;"></i></a>
+    <br><a class="foot-text" href=""> dhuoljok@gmail.com</a> <br> 
+    +254 798659609 <br> 
+    Nakuru, Kabarak <br>
+  </p>
+
+  <p class="foot-text3">Contact Kelvin at: <br>
+     <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple;"></i></a>
+     <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple;"></i></a>
+    <br><a class="foot-text" href=""> kmmuli76@gmail.com</a> <br> 
+    +254 746726823 <br>
+    Nakuru, Kabarak <br> 
+  </p>
+
+</div>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+</body>
+</html>

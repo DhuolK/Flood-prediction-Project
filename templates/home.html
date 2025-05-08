@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+   <!-- Tailwind CSS
+   <script defer src="https://cdn.tailwindcss.com"></script>-->
+
+   <!-- Personal JS -->
+    <script defer src="/static/homescript.js"></script>
+
+
+   <!-- Personal CSS -->
+   <link rel="stylesheet" href="/static/homestyle.css">
+    
+   <!-- Font Awesome (Icons) -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+   <!-- Include Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <title>Flood Prediction home</title>
+
+
+</head>
+
+<body>
+  
+  <header>
+    <nav class="nav">
+        <div class="nav-left">
+            <i class="fas fa-water" style="color:black"></i> 
+            <h1 style="color: black;">FLOOD </h1>
+        </div>
+        
+        <div class="nav-right">
+            <a href="/index"><button type="button" class="predict">PREDICT</button></a>
+            <a href="/history"><button type="button" class="HISTORY">HISTORY</button></a>
+            <a href="/info"><button type="button" class="INFO">ABOUT</button></a>
+            {% if 'user' in session %}
+            <div class="profile-icon" onclick="toggleDropdown()">
+                <span>{{ user.initials }}</span>
+            </div>
+            {% else %}
+            <div class="profile-icon" onclick="toggleDropdown()">
+                <span>?</span>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<div class="dropdown" id="dropdown">
+    <div class="dropdown-header">
+        {% if 'user' in session %}
+        <div class="avatar">{{ user.initials }}</div>
+        <div class="user-info">
+            <p class="user-name">{{ user.name }}</p>
+            <p class="user-email">{{ user.email }}</p>
+        </div>
+        {% else %}
+        <div class="avatar">?</div>
+        <div class="user-info">
+            <p class="user-name">Guest</p>
+            <p class="user-email">Not logged in</p>
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+    <a href="{{ url_for('auth.signup') }}" class="dropdown-item">Create Account</a>
+    <a href="{{ url_for('auth.login_page') }}" class="dropdown-item">Log in</a>
+    {% if 'user' in session %}
+    <a href="{{ url_for('auth.logout') }}" class="dropdown-item">Sign out</a>
+    {% endif %}
+    <hr>
+    <a href="/admin/login" class="dropdown-item">ADMIN Log in</button> </a>
+</div>
+
+  <br><br><br><br>
+
+  <div class="content">
+
+    <div class="text">
+
+        <img class="img-logo" src="{{ url_for('static', filename='image/flood_logo_1200x1200.webp') }}" alt="Click me">
+
+        <p>It's concise, memorable, and the idea of protection and vigilance in flood detection using machine learning.</p><br>
+
+        
+    </div>
+
+    <div class="image">
+      <img class="img-rainfall" align="right" src="{{ url_for('static', filename='image/bc9t5t.webp') }}" alt="Image ERROR404">
+    </div>
+
+  </div>
+
+  <br><br><br><br>
+
+  <div class="footer">
+    <h2>FLOOD<br>PREDICTION<br>SYSTEM</h2>
+
+    <p class="foot-text">Contact Glen at: <br>
+      <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+      <br><a class="foot-text" href=""> kiruiglen@gmail.com</a><br> 
+      +254 790392349 <br> 
+      Nakuru, Kabarak <br>
+    </p>
+
+    <p class="foot-text2">Contact Emmanuel at: <br>
+      <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+      <br><a class="foot-text" href=""> dhuoljok@gmail.com</a> <br> 
+      +254 79865960  <br> 
+      Nakuru, Kabarak <br>
+    </p>
+
+    <p class="foot-text3">Contact Kelvin at: <br>
+       <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+       <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+      <br><a class="foot-text" href=""> kmmuli76@gmail.com</a> <br> 
+      +254 746726823 <br>
+      Nakuru, Kabarak <br> 
+    </p>
+
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Prediction Chart</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            width: device-width;
+
+            background-image: url(static/image/abstract-blue-light-pipe-speed-zoom-black-background-technology_1142-9980.avif);
+            
+            height: 100%;
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container, header {
+            margin-left: 0px;
+            display: flex;
+            justify-content: flex;
+            align-items: center;
+            background-color: #f1f1f1;
+            width: 100%;
+            
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            margin-top: 14px;
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+
+        }
+
+        a:focus {
+            transform: scale(1.01);
+        }
+
+
+        .nav-container {
+            margin-left: 450px;
+            display: flex;
+        }
+
+
+
+        .chart-container {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .risk-indicator {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .low-risk { background-color: #d4edda; color: #155724; }
+
+        .moderate-risk { background-color: #fff3cd; color: #856404; }
+
+        .high-risk { background-color: #f8d7da; color: #721c24; }
+
+        .i {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin-top: 22px;
+            margin-right: 5px;
+            margin-bottom: 25px;
+            margin-left: 0px;
+            font-size: xx-large;
+        }
+
+
+        h1 {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin-top: 20px;
+            margin-right: 360px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            font-size: xx-large;
+        }
+
+        .nav:hover {
+            background: none;
+            color: rgb(22, 21, 21);
+        }
+
+        .chart-page-container {
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card{
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="i"><i class="fas fa-water" style="color:black;"></i></div>
+            <h1 style="color: black; margin-left: 10px;">FLOOD</h1>
+
+             <div class="nav-container">
+
+                <a class="nav" href="{{ url_for('home') }}">HOME</a>
+
+                <a class="nav" href="{{ url_for('index') }}">PREDICT</a>
+
+                <a class="nav" href="{{ url_for('history') }}">HISTORY</a>
+
+                <a class="nav" href="{{ url_for('info') }}">ABOUT</a>
+                
+            </div>
+        </nav>
+    </header>
+
+    <div class="chart-page-container">
+        <h2 class="text-center mb-4" style="color: whitesmoke;"><b> Flood Prediction Analysis for {{ chart_data.city }} </b> </h2>
+        
+        <!-- City Selection Form -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="{{ url_for('predict') }}" method="post" class="row g-3">
+                    <div class="col-md-8">
+                        <input type="text" name="city" class="form-control" placeholder="Enter city name" 
+                            value="{{ chart_data.city if chart_data else '' }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> View Chart
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% elif not chart_data %}
+        <div class="alert alert-info" role="alert">
+            Please select a city to view the flood prediction chart.
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chart-container">
+                    <canvas id="weatherChart" 
+                        data-temperature="{{ chart_data.temperature }}"
+                        data-humidity="{{ chart_data.humidity }}"
+                        data-rainfall="{{ chart_data.rainfall }}"
+                        data-city="{{ chart_data.city }}">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="margin-top: 22px;">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Current Weather Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">{{ chart_data.city }}</h6>
+                        <p class="card-text">
+                            <strong>Temperature:</strong> {{ chart_data.temperature }}°C<br>
+                            <strong>Humidity:</strong> {{ chart_data.humidity }}%<br>
+                            <strong>Rainfall:</strong> {{ chart_data.rainfall }}mm
+                        </p>
+                        <div class="risk-indicator 
+                            {% if chart_data.risk_level == 'Low Risk' %}low-risk
+                            {% elif chart_data.risk_level == 'Moderate Risk' %}moderate-risk
+                            {% else %}high-risk{% endif %}">
+                            Flood Risk: {{ chart_data.risk_level }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const canvas = document.getElementById('weatherChart');
+        if (canvas) {
+            const temperature = parseFloat(canvas.dataset.temperature);
+            const humidity = parseFloat(canvas.dataset.humidity);
+            const rainfall = parseFloat(canvas.dataset.rainfall);
+            const city = canvas.dataset.city;
+
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Temperature (°C)', 'Humidity (%)', 'Rainfall (mm)'],
+                    datasets: [{
+                        label: 'Weather Parameters',
+                        data: [temperature, humidity, rainfall],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Weather Parameters for ' + city
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

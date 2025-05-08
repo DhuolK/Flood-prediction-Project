@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Prediction History</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <!-- Font Awesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="/static/homestyle.css">
+
+    <style>
+        body, html{
+            height: 100%;
+            margin: 0;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+        }
+        .history-container {
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .search-form {
+            background-color: rgb(60, 59, 59);
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        .action-button {
+            background-color: rgba(85, 85, 85, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: rgba(100, 100, 100, 0.9);
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        h1 {
+            display: flex;
+            flex-wrap: no-wrap;
+            margin: 25px 20px 20px 20px;
+            font-size: xx-large;
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav {
+            margin: 0 15px;
+            font-size: medium;
+            text-decoration: none;
+            color: black;
+        }
+
+        .nav:hover {
+            color: beige;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+            color: aquamarine;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 25px 20px 20px 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0rem 1rem;
+            margin-bottom: 20px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 250px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dropdown-header {
+            display: flex;
+            padding: 15px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+            color: aquamarine;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: gray;
+            margin: 0;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+        }
+
+        .dropdown-item:hover {
+            background: #f0f0f0;
+        }
+
+        hr {
+            margin: 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="nav-left">
+                <i class="fas fa-water" style="display: flex; flex-wrap: nowrap; margin: 25px 20px 20px 20px; font-size: xx-large; color: black;"></i> 
+                <h1 style="color: black;">FLOOD </h1>
+            </div>
+            
+            <div class="nav-right">
+                <div class="navigation">
+                    <a class="nav" href="/">HOME</a>
+
+                    <a class="nav" href="/index">PREDICT</a>
+
+                    <a class="nav" href="/info">ABOUT</a>
+                </div>
+                {% if 'user' in session %}
+                <div class="profile-icon" onclick="toggleDropdown()">
+                    <span>{{ user.initials }}</span>
+                </div>
+                {% else %}
+                <div class="profile-icon" onclick="toggleDropdown()">
+                    <span>?</span>
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <div class="dropdown" id="dropdown">
+        <div class="dropdown-header">
+            {% if 'user' in session %}
+            <div class="avatar">{{ user.initials }}</div>
+            <div class="user-info">
+                <p class="user-name">{{ user.name }}</p>
+                <p class="user-email">{{ user.email }}</p>
+            </div>
+            {% else %}
+            <div class="avatar">?</div>
+            <div class="user-info">
+                <p class="user-name">Guest</p>
+                <p class="user-email">Not logged in</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr>
+        <a href="{{ url_for('auth.signup') }}" class="dropdown-item">Create Account</a>
+        <a href="{{ url_for('auth.login_page') }}" class="dropdown-item">Log in</a>
+        {% if 'user' in session %}
+        <a href="{{ url_for('auth.logout') }}" class="dropdown-item">Sign out</a>
+        {% endif %}
+    </div>
+
+    <div class="history-container">
+        <h1 class="text-center mb-4">Prediction History</h1>
+
+        <!-- Search Form -->
+        <div class="search-form">
+            <form action="/history" method="get" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" name="city" class="form-control" placeholder="Search by City">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" name="date" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100" style="width: 100px; text-align: center; ">
+                    <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table of Past Predictions -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Date</th>
+                        <th>Temperature (°C)</th>
+                        <th>Humidity (%)</th>
+                        <th>Rainfall (mm)</th>
+                        <th>Flood Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in predictions %}
+                    <tr>
+                        <td>{{ record.city }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.temperature }}</td>
+                        <td>{{ record.humidity }}</td>
+                        <td>{{ record.rainfall }}</td>
+                        <td><strong>{{ record.predicted_risk }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Action Buttons -->
+            <a href="{{ url_for('home') }}" class="btn btn-secondary ms-2">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2>FLOOD<br>PREDICTION<br>SYSTEM</h2>
+      
+        <p class="foot-text">Contact Glen at: <br>
+          <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+          <br><a class="foot-text" href=""> kiruiglen@gmail.com</a><br> 
+          +254 790392349 <br> 
+          Nakuru, Kabarak <br>
+        </p>
+      
+        <p class="foot-text2">Contact Emmanuel at: <br>
+          <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+          <br><a class="foot-text" href=""> dhuoljok@gmail.com</a> <br> 
+          +254 79865960 <br> 
+          Nakuru, Kabarak <br>
+        </p>
+      
+        <p class="foot-text3">Contact Kelvin at: <br>
+           <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-x-twitter" style="color: purple; font-size: 24px;"></i></a>
+           <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram" style="color: purple; font-size: 24px;"></i></a>
+          <br><a class="foot-text" href=""> kmmuli76@gmail.com</a> <br> 
+          +254 746726823 <br>
+          Nakuru, Kabarak <br> 
+        </p>
+      
+      </div>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

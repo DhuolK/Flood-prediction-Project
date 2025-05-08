@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Flood Prediction System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(/static/image/wp9040262.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            margin-bottom: 30px;
+        }
+        .user-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-action {
+            margin: 0 5px;
+        }
+        .status-badge {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #616364;">
+        <div class="container">
+            <a class="navbar-brand fw-bold" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                USER MANAGEMENT
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary btn-sm me-2">DASHBOARD</a>
+                <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary btn-sm">LOGOUT</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="user-card">
+                    <h2 class="mb-4">Registered Users</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile Number</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.mobilenumber }}</td>
+                                    <td>
+                                        <span class="badge {% if user.status == 'active' %}bg-success{% else %}bg-danger{% endif %} status-badge">
+                                            {{ user.status|default('active') }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if user.status != 'suspended' %}
+                                        <form action="{{ url_for('suspend_user', user_id=user._id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-warning btn-sm btn-action">Suspend</button>
+                                        </form>
+                                        {% else %}
+                                        <form action="{{ url_for('activate_user', user_id=user._id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-success btn-sm btn-action">Activate</button>
+                                        </form>
+                                        {% endif %}
+                                        <form action="{{ url_for('reset_user_password', user_id=user._id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-info btn-sm btn-action">Reset Password</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

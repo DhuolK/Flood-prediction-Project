@@ -1,0 +1,183 @@
+/* Global Styles */
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+  background:url(/static/image/abstract-blue-light-pipe-speed-zoom-black-background-technology_1142-9980.avif);
+
+  height:100%;
+
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+/* Card Container */
+.card-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px 20px;
+}
+
+.card {
+    background:#D0B3F0;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 650px;
+    text-align: center;
+    transition: transform 0.8s ease-in-out;
+}
+
+.btn:hover, .field:hover, .card:hover{
+    transform: scale(1.00);
+    
+}
+
+.field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 35px;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.field:focus {
+    outline: none;
+    border-color: gray;
+}
+
+/* Button Styling */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(11, 11, 182, 0.381);
+    color: black;
+    border: 2px solid black;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: beige;
+}
+
+/* Error Message */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error--hidden {
+    display: none;
+}
+
+/* Links */
+a {
+    display: flex;
+    justify-content: space-evenly;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: beige;
+}
+
+/* Home button styles */
+.fa-home {
+    font-size: 20px;
+    color: black;
+    transition: color 0.3s ease;
+}
+
+button:hover .fa-home {
+    color: rgb(16, 14, 14);
+}
+
+  
+  
+  h1 {
+    margin: 0.5em 0 1em;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--almost-black);
+  }
+  
+  h2 {
+    margin: 0.5em 0 1em;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--grey-dark);
+  }
+  
+  p {
+    margin: 24px 0;
+  }
+  
+
+  
+  @media only screen and (max-width: 520px) {
+    .card-wrapper {
+      padding: 30px 0 0;
+    }
+  }
+  
+  @media only screen and (max-width: 520px) {
+    .card {
+      margin: 0 0 30px;
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+  
+  /* Forms */
+  form {
+    transition: opacity .15s ease;
+    width: 100%;
+  }
+  
+  form.loading {
+    pointer-events: none;
+    opacity: 0.75;
+  }
+  
+  label {
+    display: flex;
+    justify-content: left;
+    color: black;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  hr{
+    border: 1px solid black;
+    width: 90%;
+    margin-left: 12px;
+    margin-right: 8px;
+  }
+  

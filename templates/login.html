@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login</title>
+
+  <link rel="stylesheet" href="/static/loginstyle.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="/static/loginscript.js"></script>
+
+
+</head>
+<body>
+  <div class="card-wrapper">
+
+    <div class="card">
+
+      <a href="/"><button type="button"
+          style="
+            background: none;
+            color: black;
+            border: none;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex-start;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;;">
+            <i class="fa fa-home"></i></button></a>
+
+            <hr><br>
+
+      <h1 class="center"><i class="fa fa-user" style="font-size: 100px; color:whitesmoke"></i></h1>
+
+      <form name="login_form">
+
+       
+
+        <label for="email">Email</label>
+        <input type="text" name="email" class="field" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" class="field" required>
+
+        <p class="error error--hidden"></p>
+
+        <input type="submit" value="Log In" class="btn"> <br>
+
+        <a href="{{ url_for('auth.forgot_password') }}">Forgot Password?</a><br><br>
+
+        <a href="{{url_for('auth.signup_page')}}">Sign up</a>
+
+      
+      </form>
+      
+    </div>
+  
+  </div>
+    
+</body>
+</html>

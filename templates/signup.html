@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Signup</title>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="/static/loginscript.js"></script>
+
+  <link rel="stylesheet" href="/static/loginstyle.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body>
+
+  <div class="card-wrapper">
+
+    <div class="card">
+
+      <a href="/"><button type="button"
+        style="
+          background: none;
+          color: black;
+          border: none;
+          padding: 12px 16px;
+          font-size: 16px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;">
+          <i class="fa fa-home"></i></button></a>
+
+      <h1 class="center">Create an Account</h1>
+
+      <form name="signup_form">
+
+        <label for="name">Name</label>
+        <input type="text" name="name" class="field" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" class="field" required>
+
+        <label for="mobilenumber">Mobile Number</label>
+        <input type="tel" name="mobilenumber" class="field" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" class="field" required>
+
+        <p class="error error--hidden"></p>
+
+        <input type="submit" value="SignUp" class="btn">
+
+        <a href="{{url_for('auth.login_page')}}">Log in</a>
+      
+      </form>
+      
+    </div>
+  </div>
+
+</body>
+</html>
